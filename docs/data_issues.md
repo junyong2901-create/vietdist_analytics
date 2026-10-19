@@ -148,8 +148,9 @@
 | 1 | Cột phone sai định dạng | bigint | Thấp | Chuyển về dạng text và thêm đầu '0'|
 | 2 | Cột date_of_birth sai định dạng | text | Cao | Chuyển về dạng timestamp |
 | 3 | join_date sai định dạng | text | Cao | Chuyển về dạng timestamp |
-| 4 | Cột resign_date 100% null |  | Thấp | drop cột |
-| 5 | Cột transfer_note 100% null |  | Thấp | drop cột |
+| 4 | effective_date sai định dạng | text | Cao | Chuyển về dạng timestamp |
+| 5 | Cột resign_date 100% null |  | Thấp | drop cột |
+| 6 | Cột transfer_note 100% null |  | Thấp | drop cột |
 ---
 
 ### raw.sales_target_plan
