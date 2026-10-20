@@ -101,7 +101,7 @@ from raw.raw_employees
 order by employee_id;
 
 -- Create stg_sales_target_plan
-create table staging."stg_sales_target_plan" as 
+create table staging."stg_sales_targets" as 
 select 
 	plan_version,
 	to_timestamp(version_date, 'YYYY-MM-DD') as version_date,
@@ -116,7 +116,7 @@ select
 	target_revenue,
 	target_quantity,
 	target_new_customers
-from raw.sales_target_version;
+from raw.raw_sales_targets;
 
 -- Create stg_distributo_orders
 create table staging."stg_distributor_orders" as 
