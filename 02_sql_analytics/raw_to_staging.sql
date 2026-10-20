@@ -194,3 +194,50 @@ select
 	created_by
 from raw.raw_promotions
 order by promotion_id;
+
+-- Create stg_sales_targets_versioned
+create table staging."stg_sales_targets_versioned" as 
+select 
+	plan_version,
+	to_timestamp(version_date, 'YYYY-MM-DD') as version_date,
+	to_timestamp(effective_from, 'YYYY-MM-DD') as effective_from,
+	to_timestamp(effective_to, 'YYYY-MM-DD') as effective_to,
+	employee_id,
+	employee_name,
+	region,
+	team,
+	year,
+	month,
+	target_revenue,
+	target_quantity,
+	target_new_customers, 
+	case 
+		when month between 1 and 6 and plan_version ='v1' then TRUE
+		when month between 7 and 12 and plan_version ='v2' then true 
+		else false
+	end as is_lastest_flag
+from raw.sales_target_version;
+
+select *
+from staging.stg_sales_targets_versioned
+where is_lastest_flag = true 
+order by employee_id, month;
+
+-- Create stg_employees_version
+create table staging."stg_employees_version" as 
+select 
+	employee_id,
+	full_name,
+	gender,
+	to_timestamp(date_of_birth, 'YYYY-MM-DD') as date_of_birth,
+	to_timestamp(join_date, 'YYYY-MM-DD') as join_date,
+	position,
+	region,
+	team,
+	email,
+	concat('0', cast(phone as text)) as phone,
+	status,
+	version,
+	to_timestamp(effective_date, 'YYYY-MM-DD') as effective_date
+from raw.employees_version
+order by version, employee_id;
